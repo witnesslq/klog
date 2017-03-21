@@ -9,11 +9,11 @@ klog解决分布式环境日志分散问题,目的是将日志统一收集到一
 ## 集成步骤
 ### 1.安装kafka
 [kafka github](https://github.com/apache/kafka)
-### 1.创建kafka topic,相关参数含义请参考kafka相关资料
+### 2.创建kafka topic,相关参数含义请参考kafka相关资料
 ```
 .${kafka.path}/bin/kafka-topics.bat --create --zookeeper zookeeper1.dafy.com --partitions 4 --replication-factor 1  --topic klog
 ```
-### 2.应用集成klog,引入maven依赖
+### 3.应用集成klog,引入maven依赖
 ```xml
 <dependency>
 	<groupId>com.dafy.base</groupId>
@@ -21,7 +21,7 @@ klog解决分布式环境日志分散问题,目的是将日志统一收集到一
 	<version>${klog.version}</version>
 </dependency>
 ```
-### 3.在需要收集日志的应用logback配置中添加logback appender
+### 4.在需要收集日志的应用logback配置中添加logback appender
 ```xml
 <appender name="klog" class="com.dafy.klog.producer.KLogProducerAppender">
 	<!--kafka地址-->
@@ -34,11 +34,11 @@ klog解决分布式环境日志分散问题,目的是将日志统一收集到一
 	<includeCallerData>true</includeCallerData>
 </appender>
 ```
-### 4.启动消费端,收集日志
+### 5.启动消费端,收集日志
 ```
 .${klog.consumer.path}/bin/start.sh klog-consumer.properties
 ```
-### 5.klog-consumer.properties配置说明
+### 6.klog-consumer.properties配置说明
 ```
 #kafka 地址
 bootstrap.servers=kafka1.dafy.com:9092
