@@ -36,7 +36,7 @@ klog解决分布式环境日志分散问题,目的是将日志统一收集到一
 ```
 ### 5.启动消费端,收集日志
 ```
-.${klog.consumer.path}/bin/start.sh klog-consumer.properties
+.${klog.consumer.path}/bin/start.sh
 ```
 ### 6.klog-consumer.properties配置说明
 ```
