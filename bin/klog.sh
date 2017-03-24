@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
-
-SERVER_ID=$(pwd | awk -F/ '{print $NF}')
-echo $SERVER_ID
 start()
 {
-       VM_OPTS=""
-        for line in `cat vm.options`
-        do
-        VM_OPTS=${VM_OPTS}" "${line}
-        done
-        echo "Java VM PARAMS:" "${VM_OPTS}"
-        nohup java ${VM_OPTS} -classpath conf:lib/* -Dserver_id=$SERVER_ID com.dafy.klog.consumer.KLogConsumerStartup $1 >nohup.out 2>&1 &
+        nohup java ${VM_OPTS} -classpath conf:lib/* -server -Xmx512M -Xmx512M com.dafy.klog.consumer.KLogConsumerStartup $1 >nohup.out 2>&1 &
         echo $! > pid
 }
 stop()
