@@ -66,7 +66,7 @@ public class KLogConsumerInvoker implements Runnable{
     public void run() {
         String topicName=properties.getProperty("kafka.topic.name");
         String pullIntervalValue=properties.getProperty("kafka.pull.interval");
-        long pullInterval=100;
+        long pullInterval=1000;
         if(!Strings.isNullOrEmpty(pullIntervalValue)){
             pullInterval=Long.valueOf(pullIntervalValue);
         }
@@ -122,12 +122,13 @@ public class KLogConsumerInvoker implements Runnable{
     private KLogConsumerAppender getAppender(KLogEvent event){
         String fileNamePattern=this.properties.getProperty("logback.fileName.pattern");
         String logPattern=this.properties.getProperty("logback.log.pattern");
+        String logDir=this.properties.getProperty("logback.log.dir");
         String appenderName=event.getServiceName()+"-"+event.getAddress();
         KLogConsumerAppender appender=appenderCache.get(appenderName);
         if(appender==null) {
             appender=new KLogConsumerAppender(context,appenderName,event.getServiceName(),
                     event.getAddress(),fileNamePattern,
-                    logPattern);
+                    logPattern,logDir);
             appenderCache.put(appenderName, appender);
             appender.start();
         }
