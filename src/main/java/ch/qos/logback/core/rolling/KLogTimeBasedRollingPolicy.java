@@ -1,15 +1,10 @@
 package ch.qos.logback.core.rolling;
 
-import ch.qos.logback.classic.PatternLayout;
-import ch.qos.logback.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy;
-import ch.qos.logback.core.rolling.RolloverFailure;
-import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import ch.qos.logback.core.rolling.helper.ArchiveRemover;
 import ch.qos.logback.core.rolling.helper.CompressionMode;
 import ch.qos.logback.core.rolling.helper.FileFilterUtil;
 import ch.qos.logback.core.rolling.helper.RenameUtil;
 
-import java.io.File;
 import java.util.Date;
 
 /**
@@ -22,8 +17,15 @@ public class KLogTimeBasedRollingPolicy<E>  extends TimeBasedRollingPolicy<E> {
     public KLogTimeBasedRollingPolicy(String serviceName,String addr){
         this.serviceName=serviceName;
         this.addr=addr;
-        this.klogRenameUtil.setContext(this.getContext());
+
     }
+
+    @Override
+    public void start() {
+        super.start();
+        klogRenameUtil.setContext(this.getContext());
+    }
+
     @Override
     public void rollover() throws RolloverFailure {
         String elapsedPeriodsFileName = getTimeBasedFileNamingAndTriggeringPolicy()
@@ -31,7 +33,6 @@ public class KLogTimeBasedRollingPolicy<E>  extends TimeBasedRollingPolicy<E> {
         elapsedPeriodsFileName=elapsedPeriodsFileName
                 .replaceAll("%PARSER_ERROR\\[sn\\]",this.serviceName)
                 .replaceAll("%PARSER_ERROR\\[addr\\]",this.addr);
-
         String elapsedPeriodStem = FileFilterUtil.afterLastSlash(elapsedPeriodsFileName);
         if (compressionMode == CompressionMode.NONE) {
             if (getParentsRawFileProperty() != null) {
