@@ -4,6 +4,8 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
+import ch.qos.logback.core.rolling.KLogTimeBasedRollingPolicy;
+import com.dafy.klog.util.KLogUtil;
 import com.google.common.base.Strings;
 
 import java.io.File;
@@ -38,7 +40,9 @@ public class KLogConsumerAppender extends RollingFileAppender {
             logDir="logs";
         }
         setFile(logDir+ FILE_SP+serviceName+FILE_SP+serviceName+"-"+address+".log");
-        TimeBasedRollingPolicy policy=new TimeBasedRollingPolicy<>();
+        KLogTimeBasedRollingPolicy policy=new KLogTimeBasedRollingPolicy(
+                this.serviceName,this.address
+        );
         policy.setFileNamePattern(fileNamePattern);
         policy.setParent(this);
         policy.setContext(context);

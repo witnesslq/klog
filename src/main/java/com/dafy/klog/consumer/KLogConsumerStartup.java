@@ -3,7 +3,6 @@ package com.dafy.klog.consumer;
 import ch.qos.logback.classic.PatternLayout;
 import com.dafy.klog.logback.KLogConverter;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 

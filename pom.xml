@@ -72,7 +72,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.xiaoluo.component.ComponentStartup</mainClass>
+                            <mainClass>com.dafy.klog.consumer.KLogConsumerStartup</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
